@@ -30,5 +30,7 @@ module.exports = {
     'arrow-spacing': 'warn',
     'comma-spacing': ['warn', { 'before': false, 'after': true }],
     'spaced-comment': ['warn', 'always'],
+    'object-curly-spacing': ['warn', 'always'],
+    'array-bracket-spacing': ['warn', 'never'],
   },
 };
