@@ -21,6 +21,14 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    'prettier/prettier': 0, //ไม่จัด Format
+    'prettier/prettier': 'off', // ไม่จัด Format ตาม prettier
+    // 'indent': ['warn', 4],
+    'semi': ['warn', 'always'],
+    'semi-style': ['warn', 'last'],
+    'semi-spacing': ['warn', {'before': false, 'after': true}],
+    'block-spacing': 'warn',
+    'arrow-spacing': 'warn',
+    'comma-spacing': ['warn', { 'before': false, 'after': true }],
+    'spaced-comment': ['warn', 'always'],
   },
 };
