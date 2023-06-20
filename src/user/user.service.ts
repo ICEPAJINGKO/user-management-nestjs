@@ -25,7 +25,7 @@ export class UserService {
         return this.userModel.findOneAndUpdate({ username }, update, { new: true }).exec();
     }
 
-    async delete(username: string): Promise<UserDocument> {
-        return this.userModel.findOneAndDelete({ username }).exec();
+    async delete(username: string): Promise<any> {
+        return this.userModel.deleteOne({ username }).exec();
     }
 }
