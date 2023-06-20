@@ -3,10 +3,14 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/user.dto';
 import { User, UserDocument } from './schemas/user.schema';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class UserService {
-    constructor(@InjectModel(User.name) private readonly userModel: Model<User>) { }
+    constructor(
+        @InjectModel(User.name) private readonly userModel: Model<User>,
+        private readonly configService: ConfigService
+    ) { }
 
     async create(createUserDto: CreateUserDto): Promise<UserDocument> {
         const createdUser = new this.userModel(createUserDto);
@@ -27,5 +31,11 @@ export class UserService {
 
     async delete(username: string): Promise<any> {
         return this.userModel.deleteOne({ username }).exec();
+    }
+
+    async mixUserExmple(username: string): Promise<any> {
+        const user: any = await this.userModel.findOne({ username }).lean().exec();
+        user.env = this.configService.get('NODE_ENV');
+        return user;
     }
 }
