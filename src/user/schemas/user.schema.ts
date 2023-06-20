@@ -1,12 +1,24 @@
-import * as mongoose from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document, HydratedDocument } from 'mongoose';
 
-export const UserSchema = new mongoose.Schema({
-    username: { type: String, required: true },
-    email: String,
-    firstName: String,
-    lastName: String,
-    dateOfBirth: { type: Date, require: true }
-},
-{
-    timestamps: true, // เซ็ตให้ Mongoose สร้างเวลาการสร้างและเวลาการอัปเดตอัตโนมัติ
-});
+export type UserDocument = HydratedDocument<User>;
+
+@Schema({ collection: 'users', timestamps: true })
+export class User extends Document {
+  @Prop({ required: true, unique: true })
+  username: string;
+
+  @Prop({ unique: true })
+  email: string;
+
+  @Prop({ default: '' })
+  firstName: string;
+
+  @Prop({ default: '' })
+  lastName: string;
+
+  @Prop({ required: true })
+  dateOfBirth: Date;
+}
+
+export const UserSchema = SchemaFactory.createForClass(User);
