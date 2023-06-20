@@ -16,4 +16,16 @@ export class UserService {
     async findAll(): Promise<UserDocument[]> {
         return this.userModel.find().exec();
     }
+
+    async update(username: string, update: object): Promise<any> {
+        return this.userModel.updateOne({ username }, update).exec();
+    }
+
+    async updateAndFind(username: string, update: object): Promise<UserDocument> {
+        return this.userModel.findOneAndUpdate({ username }, update, { new: true }).exec();
+    }
+
+    async delete(username: string): Promise<UserDocument> {
+        return this.userModel.findOneAndDelete({ username }).exec();
+    }
 }
