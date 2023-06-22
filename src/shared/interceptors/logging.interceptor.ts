@@ -1,6 +1,6 @@
-import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
+import { Injectable, NestInterceptor, ExecutionContext, CallHandler, HttpException } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
@@ -14,7 +14,11 @@ export class LoggingInterceptor implements NestInterceptor {
         return next
             .handle()
             .pipe(
-                tap(() => console.log(`[${method}] ${url} completed in ${Date.now() - now}ms`))
+                tap(() => console.log(`[${method}] ${url} completed in ${Date.now() - now}ms`)),
+                catchError((error) => {
+                    console.error(`\x1b[31m`, `[${method}] ${url} completed in ${Date.now() - now}ms error:`, JSON.stringify(error.response), `\x1b[0m`);
+                    throw new HttpException(error.response, error.response.statusCode);
+                }),
             );
     }
 }
