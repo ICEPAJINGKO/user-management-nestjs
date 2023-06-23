@@ -4,8 +4,6 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
-import { APP_INTERCEPTOR } from '@nestjs/core';
-import { LoggingInterceptor } from './shared/interceptors/logging.interceptor';
 
 @Module({
   imports: [
